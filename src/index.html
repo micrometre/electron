@@ -2,14 +2,27 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
+    Title: <input id="title"/>
+    <button id="btn" type="button">Set</button>
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <p>Welcome to your Electron application.</p>
     <p id="info"></p>
     <p id="list"></p>
-    <p id="demo"></p>
+    <button type="button" id="btn1">Open a File</button>
+    File path: <strong id="filePath"></strong>
+
+
+    <br />
+    <p>from renderer to main.</p>
+
+    <input type="text" id="sendInput" oninput="sendFunction()">
+    
+    <p id="send"></p>
+    
+
+    Current value: <strong id="counter">0</strong>
+
 
   </body>
   <script src="./renderer.js"></script>

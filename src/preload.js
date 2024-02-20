@@ -1,18 +1,15 @@
 const { contextBridge, ipcRenderer } = require('electron/renderer')
 const { spawn } = require('node:child_process');
 const ls = spawn('ls', ['-lh', '/usr']);
-contextBridge.exposeInMainWorld('versions', {
-  node: () => process.versions.node,
-  chrome: () => process.versions.chrome,
-  electron: () => process.versions.electron,
-  ping: () => ipcRenderer.invoke('ping')
 
+contextBridge.exposeInMainWorld('electronAPI', {
+  setTitle: (title) => ipcRenderer.send('set-title', title),
+  openFile: () => ipcRenderer.invoke('dialog:openFile'),
+  sendMssg: () => ipcRenderer.sendSync('synchronous-message', 'pinging'), 
+  onUpdateCounter: (callback) => ipcRenderer.on('update-counter', (_event, value) => callback(value)),
+  counterValue: (value) => ipcRenderer.send('counter-value', value)
 })
-
-
-
-ls.stdout.on('data', (data) => {
-  console.log(`stdout: ${data}`);
-});
-
-
+  
+const result = ipcRenderer.sendSync('synchronous-message', 'pinging')
+console.log(result) // prints "pong" in the DevTools console
+console.log(`from preload${result}`)
