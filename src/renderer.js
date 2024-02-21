@@ -84,6 +84,7 @@ screenshot.onclick = doScreenshot;
 
 const startStream = async (constraints) => {
   const stream = await navigator.mediaDevices.getUserMedia(constraints);
+  console.log(stream)
   handleStream(stream);
 };
 
@@ -107,3 +108,5 @@ const getCameraSelection = async () => {
 };
 
 getCameraSelection();
+
+
