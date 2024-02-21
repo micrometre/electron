@@ -2,13 +2,6 @@ const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
 const path = require('node:path')
 
 
-function handleSetTitle (event, title) {
-  const webContents = event.sender
-  const win = BrowserWindow.fromWebContents(webContents)
-  win.setTitle(title)
-  console.log(title)
-}
-
 
 function receivedFromRender(event, text ){
   const webContents = event.sender
@@ -33,7 +26,6 @@ const createWindow = () => {
 }
 
 app.whenReady().then(() => {
-  ipcMain.on('set-title', handleSetTitle)
   ipcMain.on('send-input', receivedFromRender)
   createWindow()
   app.on('activate', () => {
