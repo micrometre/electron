@@ -9,6 +9,13 @@ function handleSetTitle (event, title) {
   console.log(title)
 }
 
+
+function receivedFromRender(event, text ){
+  const webContents = event.sender
+  const win = BrowserWindow.fromWebContents(webContents)
+  console.log(text)
+}
+
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
@@ -27,10 +34,7 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   ipcMain.on('set-title', handleSetTitle)
-  ipcMain.on('synchronous-message', (event, arg) => {
-    console.log(arg) // prints "ping" in the Node console
-    event.returnValue = 'pongong'
-  })
+  ipcMain.on('send-input', receivedFromRender)
   createWindow()
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
