@@ -8,8 +8,8 @@ function receivedFromRender(event, text) {
   const webContents = event.sender
   const win = BrowserWindow.fromWebContents(webContents)
   console.log(text)
-  let writer = fs.createWriteStream("sample.txt");
-  writer.write(text);
+  //let writer = fs.createWriteStream("sample.txt");
+  //writer.write(text);
 
 }
 
@@ -39,5 +39,7 @@ app.whenReady().then(() => {
 })
 
 
-
+try {
+  require('electron-reloader')(module)
+} catch (_) {}
 
