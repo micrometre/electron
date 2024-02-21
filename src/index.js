@@ -1,12 +1,16 @@
 const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
 const path = require('node:path')
+const fs = require('fs');
 
 
 
-function receivedFromRender(event, text ){
+function receivedFromRender(event, text) {
   const webContents = event.sender
   const win = BrowserWindow.fromWebContents(webContents)
   console.log(text)
+  let writer = fs.createWriteStream("sample.txt");
+  writer.write(text);
+
 }
 
 const createWindow = () => {
@@ -22,7 +26,7 @@ const createWindow = () => {
 
   win.loadFile(path.join(__dirname, 'index.html'));
   win.webContents.openDevTools()
-  
+
 }
 
 app.whenReady().then(() => {
@@ -36,6 +40,4 @@ app.whenReady().then(() => {
 
 
 
-try {
-  require('electron-reloader')(module)
-} catch (_) {}
+
