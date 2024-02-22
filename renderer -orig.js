@@ -73,16 +73,13 @@ screenshot.onclick = doScreenshot;
 
 const startStream = async (constraints) => {
   const stream = await navigator.mediaDevices.getUserMedia(constraints);
-  handleStream(stream);
-  console.log(stream)
-};
+  newFunction(stream);
 
-function sendToMain(){
-  let text = document.getElementById("sendInput").value;
-  document.getElementById("send").innerHTML =  text;
-  window.electronAPI.sendToMain(text)
-  console.log(text)
+};
+function newFunction(stream) {
+  handleStream(stream);
 }
+
 
 const handleStream = (stream) => {
   video.srcObject = stream;
@@ -91,7 +88,6 @@ const handleStream = (stream) => {
   screenshot.classList.remove('d-none');
 
 };
-
 
 
 const getCameraSelection = async () => {
@@ -103,5 +99,11 @@ const getCameraSelection = async () => {
   cameraOptions.innerHTML = options.join('');
 };
 
-
 getCameraSelection();
+
+function sendToMain(){
+  let text = document.getElementById("sendInput").value;
+  document.getElementById("send").innerHTML =  text;
+  window.electronAPI.sendToMain(text)
+  console.log(text)
+}
